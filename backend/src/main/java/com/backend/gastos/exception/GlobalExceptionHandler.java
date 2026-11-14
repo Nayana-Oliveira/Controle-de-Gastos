@@ -50,6 +50,19 @@ public class GlobalExceptionHandler {
         return montar(HttpStatus.CONFLICT, "Conflito", e.getMessage(), request);
     }
 
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    public ResponseEntity<ErroResposta> emailJaCadastrado(
+            EmailJaCadastradoException e,
+            HttpServletRequest request) {
+
+        return montar(
+                HttpStatus.CONFLICT,
+                "Conflito",
+                e.getMessage(),
+                request
+        );
+    }
+
     @ExceptionHandler(NaoAutorizadoException.class)
     public ResponseEntity<ErroResposta> naoAutorizado(
             NaoAutorizadoException e, HttpServletRequest request) {
@@ -168,6 +181,8 @@ public class GlobalExceptionHandler {
         return montar(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno",
                 "Ocorreu um erro inesperado. Tente novamente mais tarde", request);
     }
+
+
 
     private ResponseEntity<ErroResposta> montar(
             HttpStatus status, String erro, String mensagem, HttpServletRequest request) {
