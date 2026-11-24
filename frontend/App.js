@@ -1,20 +1,57 @@
+import { useState } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import LoginScreen from './src/screens/LoginScreen';
+import CadastroScreen from './src/screens/CadastroScreen';
+import HomeScreen from './src/screens/HomeScreen';
+
+import { SessaoProvider, useSessao } from './src/contexts/sessao';
+
+function Telas() {
+
+    const [tela, setTela] = useState('login');
+
+    const { usuario, carregando } = useSessao();
+
+    if (carregando) {
+        return (
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <ActivityIndicator
+                    size="large"
+                    color="#059669"
+                />
+            </View>
+        );
+    }
+
+    return (
+        <>
+            <StatusBar style="dark" />
+
+            {usuario ? (
+                <HomeScreen />
+            ) : tela === 'cadastro' ? (
+                <CadastroScreen
+                    abrirLogin={() => setTela('login')}
+                />
+            ) : (
+                <LoginScreen
+                    abrirCadastro={() => setTela('cadastro')}
+                />
+            )}
+        </>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+    return (
+        <SessaoProvider>
+            <Telas />
+        </SessaoProvider>
+    );
+}
