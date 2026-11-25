@@ -14,6 +14,7 @@ import DespesaItem from '../components/DespesaItem';
 import { CATEGORIAS } from '../constants/categorias';
 import { excluirDespesa, listarDespesas } from '../services/despesaService';
 import { formatarMoeda } from '../utils/formatar';
+import { exibirAlerta } from '../utils/alerta';
 
 export default function HomeScreen() {
     const [despesas, setDespesas] = useState([]);
@@ -32,7 +33,7 @@ export default function HomeScreen() {
             const lista = await listarDespesas();
             setDespesas(lista);
         } catch (erro) {
-            Alert.alert('Erro', 'Não foi possível carregar as despesas.');
+           exibirAlerta('Erro', 'Não foi possível carregar as despesas.');
         } finally {
             setCarregando(false);
         }
