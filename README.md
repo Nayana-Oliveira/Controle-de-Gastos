@@ -16,10 +16,10 @@ Muitas pessoas, principalmente estudantes, não sabem para onde vai o dinheiro n
 
 | Nome completo | RM | Responsabilidades |
 |---|---|---|
-| Gustavo Bordinasso | Backend: entidades, repositories, segurança (JWT, `JwtService`, `JwtFilter`, `SecurityConfig`) e resposta do login com token. Frontend: tela Home |
-| Gabriel Groppo | Backend: cadastro e login (`AutenticacaoController` e `AutenticacaoService`) e CORS. Frontend: telas de Login e Cadastro, Context de sessão, AsyncStorage e configuração do Axios |
-| Guilherme Alves de Souza | Backend: CRUD de despesas e tratamento de erros. Frontend: tela de Formulário (nova transação e edição) |
-| Nayana Oliveira | Backend: endpoint de resumo e validações. Frontend: tela de Resumo/Perfil e gráfico de rosca |
+| Gustavo Silva Bordinasso | 1142300192 | Backend: entidades, repositories, segurança (JWT, `JwtService`, `JwtFilter`, `SecurityConfig`) e resposta do login com token. Frontend: tela Home |
+| Gabriel Groppo | 1142423036 | Backend: cadastro e login (`AutenticacaoController` e `AutenticacaoService`) e CORS. Frontend: telas de Login e Cadastro, Context de sessão, AsyncStorage e configuração do Axios |
+| Guilherme Alves de Souza | 1143175326 | Backend: CRUD de despesas e tratamento de erros. Frontend: tela de Formulário (nova transação e edição) |
+| Nayana Heslley Barbosa Oliveira | 1143115892 | Backend: endpoint de resumo e validações. Frontend: tela de Resumo/Perfil e gráfico de rosca |
 
 ## Telas
 
