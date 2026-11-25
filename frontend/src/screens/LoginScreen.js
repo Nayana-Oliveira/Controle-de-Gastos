@@ -5,14 +5,13 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Alert,
     ActivityIndicator,
     ScrollView
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { exibirAlerta } from '../utils/alerta';
 import { useSessao } from '../contexts/sessao';
 
 export default function LoginScreen({ abrirCadastro }) {
@@ -27,7 +26,7 @@ export default function LoginScreen({ abrirCadastro }) {
     async function entrar() {
 
         if (!email.trim() || !senha) {
-            Alert.alert('Atenção', 'Preencha todos os campos.');
+            exibirAlerta('Atenção', 'Preencha todos os campos.');
             return;
         }
 
@@ -37,7 +36,7 @@ export default function LoginScreen({ abrirCadastro }) {
             await iniciarSessao(email.trim(), senha);
 
         } catch (erro) {
-            Alert.alert(
+            exibirAlerta(
                 'Erro ao entrar',
                 erro.response?.data?.mensagem ||
                 'Não foi possível realizar o login.'

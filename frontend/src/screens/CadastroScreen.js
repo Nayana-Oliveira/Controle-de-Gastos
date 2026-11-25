@@ -8,12 +8,13 @@ import {
     StyleSheet,
     Alert,
     ActivityIndicator,
-    ScrollView
+    ScrollView,
+    Platform
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { exibirAlerta } from '../utils/alerta';
 import { cadastrarUsuario } from '../services/autenticacaoService';
 
 export default function CadastroScreen({ abrirLogin }) {
@@ -27,15 +28,12 @@ export default function CadastroScreen({ abrirLogin }) {
     async function cadastrar() {
 
         if (!nome.trim() || !email.trim() || !senha) {
-            Alert.alert('Atenção', 'Preencha todos os campos.');
+            exibirAlerta('Atenção', 'Preencha todos os campos.');
             return;
         }
 
         if (senha.length < 8) {
-            Alert.alert(
-                'Atenção',
-                'A senha deve ter no mínimo 8 caracteres.'
-            );
+            exibirAlerta('Atenção', 'A senha deve ter pelo menos 8 caracteres.');
             return;
         }
 
@@ -44,28 +42,23 @@ export default function CadastroScreen({ abrirLogin }) {
 
             await cadastrarUsuario(nome.trim(), email.trim(), senha);
 
-            Alert.alert(
+            exibirAlerta(
                 'Sucesso',
                 'Conta criada com sucesso!',
-                [
-                    {
-                        text: 'OK',
-                        onPress: abrirLogin
-                    }
-                ]
+                abrirLogin
             );
 
         } catch (erro) {
-            Alert.alert(
-                'Erro ao cadastrar',
+            exibirAlerta(
+                'Erro',
                 erro.response?.data?.mensagem ||
                 'Não foi possível criar a conta.'
             );
+
         } finally {
             setCarregando(false);
         }
     }
-
     return (
         <LinearGradient
             colors={['#F0FDF4', '#FFFFFF', '#FFFFFF', '#ECFDF5']}
