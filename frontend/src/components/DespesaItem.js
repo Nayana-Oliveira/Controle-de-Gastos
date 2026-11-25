@@ -2,7 +2,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ICONES } from '../constants/categorias';
 import { formatarData, formatarMoeda } from '../utils/formatar';
 
-// Linha da lista com ícone, descrição, data e categoria, valor e botão de excluir
 export default function DespesaItem({ despesa, onPress, onExcluir }) {
     const ehReceita = despesa.tipo === 'RECEITA';
 

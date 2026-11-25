@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
-    Alert,
     FlatList,
     Pressable,
     ScrollView,
@@ -15,13 +14,15 @@ import { CATEGORIAS } from '../constants/categorias';
 import { excluirDespesa, listarDespesas } from '../services/despesaService';
 import { formatarMoeda } from '../utils/formatar';
 import { exibirAlerta } from '../utils/alerta';
+import { useSessao } from '../contexts/sessao';
 
-export default function HomeScreen() {
+export default function HomeScreen({ abrirFormulario }) {
     const [despesas, setDespesas] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [categoriaSelecionada, setCategoriaSelecionada] = useState('Todas');
 
-    const nomeUsuario = 'Usuário';
+    const { usuario } = useSessao();
+    const nomeUsuario = usuario?.nome ?? 'Usuário';
 
     useEffect(() => {
         carregarDespesas();
@@ -33,14 +34,14 @@ export default function HomeScreen() {
             const lista = await listarDespesas();
             setDespesas(lista);
         } catch (erro) {
-           exibirAlerta('Erro', 'Não foi possível carregar as despesas.');
+            exibirAlerta('Erro', 'Não foi possível carregar as despesas.');
         } finally {
             setCarregando(false);
         }
     }
 
     function confirmarExclusao(despesa) {
-        Alert.alert('Excluir', `Deseja excluir "${despesa.descricao}"?`, [
+        exibirAlerta('Excluir', `Deseja excluir "${despesa.descricao}"?`, [
             { text: 'Cancelar', style: 'cancel' },
             { text: 'Excluir', style: 'destructive', onPress: () => excluir(despesa.id) },
         ]);
@@ -51,13 +52,8 @@ export default function HomeScreen() {
             await excluirDespesa(id);
             setDespesas((atual) => atual.filter((d) => d.id !== id));
         } catch (erro) {
-            Alert.alert('Erro', 'Não foi possível excluir.');
+            exibirAlerta('Erro', 'Não foi possível excluir.');
         }
-    }
-
-    function abrirFormulario(despesa) {
-        // TODO: navegar para a tela do Formulário (Guilherme) quando ela existir
-        Alert.alert('Formulário', despesa ? `Editar: ${despesa.descricao}` : 'Nova transação');
     }
 
     const totalReceitas = despesas
@@ -134,12 +130,11 @@ export default function HomeScreen() {
     );
 }
 
-
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#F4F6F8' },
     header: {
         backgroundColor: '#0F9D6B',
-        paddingTop: 56, // espaço da barra de status
+        paddingTop: 56,
         paddingBottom: 24,
         paddingHorizontal: 20,
         borderBottomLeftRadius: 28,

@@ -6,12 +6,14 @@ import LoginScreen from "./src/screens/LoginScreen";
 import CadastroScreen from "./src/screens/CadastroScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import ResumoScreen from "./src/screens/ResumoScreen";
+import FormScreen from "./src/screens/FormScreen";
 
 import { SessaoProvider, useSessao } from "./src/contexts/sessao";
 
 function Telas() {
   const [tela, setTela] = useState("login");
   const [aba, setAba] = useState("home");
+  const [formulario, setFormulario] = useState(null);
 
   const { usuario, carregando } = useSessao();
 
@@ -33,10 +35,20 @@ function Telas() {
     <>
       <StatusBar style="dark" />
 
-      {usuario ? (
+      {usuario && formulario ? (
+        <FormScreen
+          despesa={formulario.despesa}
+          aoFechar={() => setFormulario(null)}
+          aoSalvar={() => setFormulario(null)}
+        />
+      ) : usuario ? (
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
-            {aba === "home" ? <HomeScreen /> : <ResumoScreen />}
+            {aba === "home" ? (
+              <HomeScreen abrirFormulario={(despesa) => setFormulario({ despesa })} />
+            ) : (
+              <ResumoScreen />
+            )}
           </View>
 
           <View style={estilos.barra}>
